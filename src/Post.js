@@ -63,6 +63,22 @@ const Post = (props) => {
     });
   };
   const [like, setLike] = useState(false);
+  const giveLike = (id) => {
+    db.collection("posts")
+      .doc(id)
+      .update({
+        likersEmail: firebase.firestore.FieldValue.arrayUnion(user.email),
+      });
+    db.collection("notification").add({
+      senderEmail: user.email,
+      notification: `${user.displayName} reacted to your post`,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      photoURL: user.photoURL,
+      userEmail: posterEmail,
+      isRead: false,
+      postId: id,
+    });
+  };
   const handleLike = (id) => {
     like
       ? db
@@ -71,12 +87,7 @@ const Post = (props) => {
           .update({
             likersEmail: firebase.firestore.FieldValue.arrayRemove(user.email),
           })
-      : db
-          .collection("posts")
-          .doc(id)
-          .update({
-            likersEmail: firebase.firestore.FieldValue.arrayUnion(user.email),
-          });
+      : giveLike(id);
     setLike(!like);
   };
   const MySwal = withReactContent(Swal);

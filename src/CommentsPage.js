@@ -65,6 +65,7 @@ const CommentsPage = ({ state, id, userEmail }) => {
         photoURL: user.photoURL,
         userEmail: userEmail,
         isRead: false,
+        postId: id,
       });
     }
     setInput("");
