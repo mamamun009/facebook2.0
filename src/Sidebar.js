@@ -13,6 +13,8 @@ import Widgets from "./Widgets";
 import Covid from "./component/covid/Covid";
 import Profile from "./component/profile/Profile";
 import Notification from "./component/notification/Notification";
+import { Badge } from "@material-ui/core";
+
 const Sidebar = () => {
   const [{ user }] = useStateValue();
   const [screen, setScreen] = useState("Feed");
@@ -51,7 +53,6 @@ const Sidebar = () => {
             setScreen={setScreen}
             screenName="Notification"
           />
-          <SidebarRow Icon={PeopleOutline} title="Friends" />
           <SidebarRow Icon={Storefront} title="Marketplace" />
           <SidebarRow Icon={VideoLibrary} title="Videos" />
         </div>

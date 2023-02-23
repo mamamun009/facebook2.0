@@ -33,7 +33,13 @@ const Message = () => {
             position: "relative",
           }}
         >
-          {chatUser && <Chatbox chatUser={chatUser} />}
+          {chatUser ? (
+            <Chatbox chatUser={chatUser} />
+          ) : (
+            <h5 style={{ textAlign: "center", marginTop: "40%" }}>
+              Select a user to start a conversation.
+            </h5>
+          )}
         </Grid>
       </Grid>
     </div>
