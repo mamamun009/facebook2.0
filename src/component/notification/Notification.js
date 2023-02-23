@@ -28,11 +28,16 @@ const Notification = () => {
     db.collection("notification")
       .orderBy("timestamp", "desc")
       .where("userEmail", "==", user.email)
-      .onSnapshot((snapshot) =>
+      .onSnapshot((snapshot) => {
         setNotifications(
           snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
-        )
-      );
+        );
+        snapshot.docChanges().forEach((change) => {
+          if (change.type === "added") {
+            console.log("New notification: ", change.doc.data());
+          }
+        });
+      });
   }, [user.email]);
   //
   return (
