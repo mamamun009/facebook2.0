@@ -16,6 +16,7 @@ const Notification = () => {
         setNotifications(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
       );
   }, [user.email]);
+  // 
   return (
     <Container maxWidth="sm" className="notification">
       <h2 style={{ padding: 10 }}>Notifications</h2>
