@@ -5,9 +5,22 @@ import Post from "../../Post";
 const PostBody = (id) => {
   const [post, setPost] = useState(null);
   useEffect(() => {
-    // db.collection("notification").doc(id =>)
-  }, []);
-  return <Post data={post} />;
+    let docRef = db.collection("posts").doc(id.id);
+    docRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+        } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+      });
+  }, [id]);
+  return <>{/* <Post data={post} /> */}</>;
 };
 
 export default PostBody;

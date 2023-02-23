@@ -50,7 +50,7 @@ const NotificationCard = ({ data }) => {
         style={{
           backgroundColor: `${data.data.isRead ? "white" : "#ebebeb"}`,
         }}
-        // onClick={handleNotification}
+        onClick={handleNotification}
       >
         <CardContent style={{ display: "flex", alignItems: "center" }}>
           <Avatar
@@ -72,7 +72,7 @@ const NotificationCard = ({ data }) => {
           }}
         >
           <Fade in={open}>
-            <PostBody id={data.id} />
+            <PostBody id={data.data.postId} />
           </Fade>
         </Modal>
       </Card>
