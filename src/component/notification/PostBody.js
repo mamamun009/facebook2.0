@@ -10,7 +10,7 @@ const PostBody = (id) => {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          console.log("Document data:", doc.data());
+          setPost({ id: id.id, data: doc.data() });
         } else {
           // doc.data() will be undefined in this case
           console.log("No such document!");
@@ -20,7 +20,13 @@ const PostBody = (id) => {
         console.log("Error getting document:", error);
       });
   }, [id]);
-  return <>{/* <Post data={post} /> */}</>;
+  return (
+    <>
+      {post && (
+        <Post data={post} />
+      )}
+    </>
+  );
 };
 
 export default PostBody;

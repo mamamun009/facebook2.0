@@ -2,9 +2,17 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Avatar, Backdrop, Fade, Modal } from "@material-ui/core";
+import { Avatar, Box, Modal } from "@material-ui/core";
 import db from "../../firebase";
 import PostBody from "./PostBody";
+import Fade from "@material-ui/core/Fade";
+import Backdrop from "@material-ui/core/Backdrop";
+import Dialog from "@material-ui/core/Dialog";
+import Slide from "@material-ui/core/Slide";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,12 +24,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    width: "60vw",
+    marginLeft: "20vw",
+    border: "1px solid #000",
+    maxHeight: "80vh",
+    marginTop: "10vh",
   },
 }));
 const NotificationCard = ({ data }) => {
@@ -32,17 +39,9 @@ const NotificationCard = ({ data }) => {
         isRead: true,
       });
     }
-    handleOpen();
-  };
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
     setOpen(true);
   };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [open, setOpen] = useState(false);
   return (
     <>
       <Card
@@ -50,31 +49,35 @@ const NotificationCard = ({ data }) => {
         style={{
           backgroundColor: `${data.data.isRead ? "white" : "#ebebeb"}`,
         }}
-        onClick={handleNotification}
       >
-        <CardContent style={{ display: "flex", alignItems: "center" }}>
+        <CardContent
+          onClick={handleNotification}
+          style={{ display: "flex", alignItems: "center" }}
+        >
           <Avatar
             src={data.data.photoURL}
             style={{ padding: 5, marginRight: 5 }}
           />
           <p>{data.data.notification}</p>
         </CardContent>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
+        <Dialog
           open={open}
-          onClose={handleClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={() => setOpen(false)}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+          onBackdropClick={() => setOpen(false)}
         >
-          <Fade in={open}>
+          {/* <Fade in={open}> */}
+          <Box
+            className="hide-scrollbar"
+            style={{ overflowY: "scroll", height: "100%", width: "100%" }}
+          >
             <PostBody id={data.data.postId} />
-          </Fade>
-        </Modal>
+          </Box>
+          {/* </Fade> */}
+        </Dialog>
       </Card>
     </>
   );

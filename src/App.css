@@ -9,3 +9,6 @@
 .app_body {
   display: flex;
 }
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
