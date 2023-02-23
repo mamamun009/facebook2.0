@@ -13,7 +13,7 @@ const Notification = () => {
       .orderBy("timestamp", "desc")
       .where("userEmail", "==", user.email)
       .onSnapshot((snapshot) =>
-        setNotifications(snapshot.docs.map((doc) => ({ data: doc.data() })))
+        setNotifications(snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() })))
       );
   }, [user.email]);
   return (
@@ -21,7 +21,7 @@ const Notification = () => {
       <h2 style={{ padding: 10 }}>Notifications</h2>
       <div style={{ marginTop: "10px" }}>
         {notifications.map((data) => (
-          <NotificationCard data={data.data} />
+          <NotificationCard data={data} />
         ))}
       </div>
     </Container>

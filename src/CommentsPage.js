@@ -64,6 +64,7 @@ const CommentsPage = ({ state, id, userEmail }) => {
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         photoURL: user.photoURL,
         userEmail: userEmail,
+        isRead: false,
       });
     }
     setInput("");
