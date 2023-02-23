@@ -1,0 +1,23 @@
+.message_send {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.message_input {
+  width: 90%;
+  padding: 15px 5px;
+  outline: none;
+  border: none;
+  background-color: #f3f2ef;
+}
+
+.message_button {
+  width: 20%;
+  padding: 15px 0;
+  background-color: #3274f0;
+  border: none;
+  color: white;
+  font-weight: 400;
+  cursor: pointer;
+}

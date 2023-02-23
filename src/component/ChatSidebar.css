@@ -1,0 +1,7 @@
+.sidebar_header {
+  display: flex;
+  align-items: center;
+  height: 50px;
+  padding: 0px 10px;
+  border-bottom: 1px solid rgb(184, 184, 184);
+}

@@ -1,11 +1,11 @@
 import firebase from "firebase";
 const firebaseConfig = {
-  apiKey: "AIzaSyAZWOmFm3u6Jy-Vn8VJzSgHo-TAQXUB5dY",
-  authDomain: "connect-xt.firebaseapp.com",
-  projectId: "connect-xt",
-  storageBucket: "connect-xt.appspot.com",
-  messagingSenderId: "814311006603",
-  appId: "1:814311006603:web:0f74eafacca689649dcf8e",
+  apiKey: "AIzaSyD9B7mUZRxyNtCEMgCG4Xojlp4Dw16-N1g",
+  authDomain: "mocospace-50fc4.firebaseapp.com",
+  projectId: "mocospace-50fc4",
+  storageBucket: "mocospace-50fc4.appspot.com",
+  messagingSenderId: "1025898642561",
+  appId: "1:1025898642561:web:b84ba9ce49e52564782180",
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
