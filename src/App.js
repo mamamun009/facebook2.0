@@ -1,10 +1,10 @@
 import "./App.css";
-import Header from "./Header";
 import Sidebar from "./Sidebar";
-import Feed from "./Feed";
-import Widgets from "./Widgets";
 import Login from "./Login";
 import { useStateValue } from "./StateProvider";
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
   const [{ user }] = useStateValue();
   return (
@@ -17,6 +17,7 @@ function App() {
 
           <div className="app_body">
             <Sidebar />
+            <ToastContainer />
             {/* App Body */}
           </div>
         </div>

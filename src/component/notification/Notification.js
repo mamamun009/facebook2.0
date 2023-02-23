@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import NotificationCard from "./NotificationCard";
 import db from "../../firebase";
 import { useStateValue } from "../../StateProvider";
+import { toast } from "react-toastify/";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +25,8 @@ const Notification = () => {
   const classes = useStyles();
   const [{ user }] = useStateValue();
   const [notifications, setNotifications] = useState([]);
+  const notify = (e) => toast(e);
+
   useEffect(() => {
     db.collection("notification")
       .orderBy("timestamp", "desc")
@@ -32,11 +35,17 @@ const Notification = () => {
         setNotifications(
           snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
         );
-        snapshot.docChanges().forEach((change) => {
-          if (change.type === "added") {
-            console.log("New notification: ", change.doc.data());
-          }
-        });
+        // snapshot.docChanges().forEach((change) => {
+        //   if (
+        //     change.type === "added" &&
+        //     change.doc.data().timestamp.seconds + 10 >
+        //       Math.round(Date.now() / 1000)
+        //   ) {
+        //     console.log("New notification: ", change.doc.data());
+        //     // notify("New notification: ");
+        //     return;
+        //   }
+        // });
       });
   }, [user.email]);
   //
