@@ -5,7 +5,6 @@ import "./Feed.css";
 import db from "./firebase";
 import MessageSender from "./MessageSender";
 import Post from "./Post";
-import StoryReel from "./StoryReel";
 const Feed = () => {
   const [post, setPost] = useState([]);
   useEffect(() => {

@@ -210,6 +210,7 @@ const Post = (props) => {
           <CommentsPage
             id={props.data.id}
             state={commentPageOpen}
+            userEmail={posterEmail}
           ></CommentsPage>
         )}
       </div>

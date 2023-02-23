@@ -11,13 +11,13 @@ const useStyles = makeStyles({
   },
 });
 
-const NotificationCard = () => {
+const NotificationCard = ({data}) => {
   const classes = useStyles();
   return (
     <Card className={classes.root}>
       <CardContent style={{ display: "flex", alignItems: "center" }}>
-        <Avatar style={{ padding: 5, marginRight: 5 }} />
-        <p>Mamun React your photo "caption"</p>
+        <Avatar src={data.photoURL} style={{ padding: 5, marginRight: 5 }} />
+        <p>{data.notification}</p>
       </CardContent>
     </Card>
   );
