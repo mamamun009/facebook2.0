@@ -1,9 +1,4 @@
-.notification {
-  background-color: white;
-  padding: 0;
-  border: 1px solid gray;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  overflow: hidden;
+.noti_title {
+  border-bottom: 1px solid rgb(184, 184, 184);
+  padding: 10px;
 }

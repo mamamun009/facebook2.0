@@ -9,6 +9,7 @@ import PostBody from "./PostBody";
 const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 275,
+    borderRadius: 0,
     marginTop: 10,
   },
   modal: {
@@ -46,8 +47,10 @@ const NotificationCard = ({ data }) => {
     <>
       <Card
         className={classes.root}
-        style={{ backgroundColor: `${data.data.isRead ? "white" : "grey"}` }}
-        onClick={handleNotification}
+        style={{
+          backgroundColor: `${data.data.isRead ? "white" : "#ebebeb"}`,
+        }}
+        // onClick={handleNotification}
       >
         <CardContent style={{ display: "flex", alignItems: "center" }}>
           <Avatar
