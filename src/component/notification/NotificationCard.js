@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 275,
     borderRadius: 0,
     marginTop: 10,
+    cursor: "pointer",
   },
   modal: {
     display: "flex",
@@ -43,13 +44,18 @@ const NotificationCard = ({ data }) => {
   return (
     <>
       <Card
-        className={classes.root}
+        className="notification-card"
         style={{
           backgroundColor: `${data.data.isRead ? "white" : "#ebebeb"}`,
+          minWidth: 275,
+          borderRadius: 10,
+          marginTop: 10,
+          cursor: "pointer",
         }}
       >
         <CardContent
           onClick={handleNotification}
+          className="notification-card"
           style={{ display: "flex", alignItems: "center" }}
         >
           <Avatar

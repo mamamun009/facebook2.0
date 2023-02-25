@@ -17,7 +17,7 @@ const Notification = ({ notifications }) => {
       <div className="noti_title">
         <h2>Notifications</h2>
       </div>
-      <div style={{ marginTop: 15 }}>
+      <div style={{ padding: 10 }}>
         {notifications.map((data) => (
           <NotificationCard key={data.id} data={data} />
         ))}
