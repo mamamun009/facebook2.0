@@ -54,7 +54,7 @@ const ProfileUpdate = () => {
             />
           </div>
           <div className="profile_bio">
-            <h2 style={{ fontSize: "26px" }}>Jugol Karmakar</h2>
+            {/* <h2 style={{ fontSize: "26px" }}>Jugol Karmakar</h2> */}
             <p
               style={{
                 paddingTop: "3px",
