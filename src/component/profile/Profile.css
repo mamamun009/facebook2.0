@@ -1,20 +1,8 @@
-.profile {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  padding: 20px;
-  margin-top: 25px;
-  border-radius: 8px;
-}
-
 .post_Item {
   display: flex;
   justify-content: center;
 }
 
 @media (max-width: 1050px) {
-  .profile {
-    /* padding: 0px 5px; */
-  }
+ 
 }

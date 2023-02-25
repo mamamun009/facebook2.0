@@ -3,7 +3,7 @@
   align-items: center;
   padding: 10px;
   cursor: pointer;
-  width: 70%;
+  width: 100%;
 }
 .sidebarRow:hover {
   background-color: lightgray;

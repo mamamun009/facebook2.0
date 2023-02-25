@@ -1,7 +1,5 @@
 .messgae_container {
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid rgb(184, 184, 184);
+  /* border: 1px solid rgb(184, 184, 184); */
 }
 
 .message_chatbox {

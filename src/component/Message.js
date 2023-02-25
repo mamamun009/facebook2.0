@@ -7,18 +7,14 @@ import "./Message.css";
 const Message = () => {
   const [chatUser, setChatUser] = useState(null);
   return (
-    <div style={{ flex: 1, minHeight: "100vh" }}>
-      <Grid
-        className="messgae_container"
-        container
-        style={{ marginTop: "25px" }}
-      >
+    <>
+      <Grid className="messgae_container" container style={{ height: "100vh" }}>
         <Grid
           item
           xs={4}
           style={{
             backgroundColor: "white",
-            height: "500px",
+            // height: "500px",
           }}
         >
           <ChatSidebar setChatUser={setChatUser} />
@@ -29,7 +25,7 @@ const Message = () => {
           xs={8}
           style={{
             backgroundColor: "white",
-            height: "500px",
+            // height: "500px",
             position: "relative",
           }}
         >
@@ -42,7 +38,7 @@ const Message = () => {
           )}
         </Grid>
       </Grid>
-    </div>
+    </>
   );
 };
 

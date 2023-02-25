@@ -1,5 +1,5 @@
 import { Avatar, IconButton } from "@material-ui/core";
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import db from "./firebase";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
@@ -15,7 +15,7 @@ import Popover from "@material-ui/core/Popover";
 import axios from "axios";
 import firebase from "firebase";
 import ReplyComp from "./ReplyComp";
-const CommentsPage = ({ state, id, userEmail, comments }) => {
+const CommentsPage = ({ id, userEmail, comments, posterEmail }) => {
   const handleCommentMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -39,15 +39,17 @@ const CommentsPage = ({ state, id, userEmail, comments }) => {
         replies: [],
         postId: id,
       });
-      db.collection("notification").add({
-        senderEmail: user.email,
-        notification: `${user.displayName} commented on your post`,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        photoURL: user.photoURL,
-        userEmail: userEmail,
-        isRead: false,
-        postId: id,
-      });
+      if (posterEmail !== user.email) {
+        db.collection("notification").add({
+          senderEmail: user.email,
+          notification: `${user.displayName} commented on your post`,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          photoURL: user.photoURL,
+          userEmail: userEmail,
+          isRead: false,
+          postId: id,
+        });
+      }
     }
     setInput("");
     setImgUrl("");
@@ -92,7 +94,7 @@ const CommentsPage = ({ state, id, userEmail, comments }) => {
               {" "}
               <div className="post_topInfo comment-area">
                 <div className="comment-area-top">
-                <Avatar src={data.data.photo} className="post_avatar" />
+                  <Avatar src={data.data.photo} className="post_avatar" />
                   <h3>{data.data.userName}</h3>
                   <IconButton
                     style={{ marginLeft: "auto" }}
@@ -108,7 +110,12 @@ const CommentsPage = ({ state, id, userEmail, comments }) => {
                 <div className="comment-img">
                   <img src={data.data.commentPhoto} alt="" />
                 </div>
-                <ReplyComp id={data.id} userEmail={userEmail} replies={data.data.replies} />
+                <ReplyComp
+                  id={data.id}
+                  userEmail={userEmail}
+                  replies={data.data.replies}
+                  posterEmail={posterEmail}
+                />
               </div>
             </div>
             <div>
@@ -197,7 +204,11 @@ const CommentsPage = ({ state, id, userEmail, comments }) => {
         >
           {" "}
           <div>
-            <Picker onEmojiClick={(emojiObejct) => setInput(prev => prev + emojiObejct.emoji)} />
+            <Picker
+              onEmojiClick={(emojiObejct) =>
+                setInput((prev) => prev + emojiObejct.emoji)
+              }
+            />
           </div>
         </Popover>
       </div>

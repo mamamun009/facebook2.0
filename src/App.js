@@ -16,9 +16,9 @@ function App() {
       if (e.data?.timestamp?.seconds + 3 > Math.round(Date.now() / 1000)) {
         notify(e.data.notification);
       }
-      // e.data.timestamp.seconds + 3 > Math.round(Date.now() / 1000) &&
     });
   }, [notifications, notifications.length]);
+  const [posts, setPost] = useState([]);
   useEffect(() => {
     if (user && user.email) {
       db.collection("notification")
@@ -29,6 +29,13 @@ function App() {
             snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
           );
         });
+      db.collection("posts")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) =>
+          setPost(
+            snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
+          )
+        );
     }
   }, [user]);
   return (
@@ -40,7 +47,7 @@ function App() {
           {/* <Header /> */}
 
           <div className="app_body">
-            <Sidebar />
+            <Sidebar notifications={notifications} posts={posts} />
             <ToastContainer />
             {/* App Body */}
           </div>

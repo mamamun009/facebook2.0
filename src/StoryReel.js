@@ -43,9 +43,8 @@ const StoryReel = () => {
       });
   };
   return (
-    <Container>
-      <Grid row>
-        <Grid item lg={6}>
+    <Grid container>
+        <Grid item md={12} lg={6}>
           <label htmlFor="upload">
             <div className="add-story">
               <AddIcon />
@@ -59,13 +58,12 @@ const StoryReel = () => {
             </div>
           </label>
         </Grid>
-        {stories.map((story) => (
-          <Grid item lg={6}>
-            <Story key={story.id} data={story}></Story>
+        {stories.map((story, index) => (
+          <Grid item md={12} lg={6} key={index}>
+            <Story data={story}></Story>
           </Grid>
         ))}
-      </Grid>
-    </Container>
+    </Grid>
   );
 };
 

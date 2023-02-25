@@ -14,8 +14,8 @@ const ChatSidebar = ({ setChatUser }) => {
   }, []);
   return (
     <div className="">
-      <div className="sidebar_header">
-        <h4>Messaging</h4>
+      <div className="noti_title">
+        <h2>Messaging</h2>
       </div>
       {users.map(
         (e) =>

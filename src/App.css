@@ -12,3 +12,8 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+@media (max-width: 750px) {
+  .story-reel {
+    display: none;
+  }
+}

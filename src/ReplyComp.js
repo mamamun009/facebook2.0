@@ -9,7 +9,7 @@ import Popover from "@material-ui/core/Popover";
 import axios from "axios";
 import firebase from "firebase";
 import { ChatBubbleOutline, InsertEmoticon, ThumbUp } from "@material-ui/icons";
-const ReplyComp = ({ id, userEmail, replies }) => {
+const ReplyComp = ({ id, userEmail, replies, posterEmail }) => {
   const [{ user }] = useStateValue();
   const [comments, setComments] = useState([]);
   useEffect(() => {
@@ -45,15 +45,17 @@ const ReplyComp = ({ id, userEmail, replies }) => {
             commentPhoto: imgUrl,
           }),
         });
-      db.collection("notification").add({
-        senderEmail: user.email,
-        notification: `${user.displayName} replied to your comment`,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        photoURL: user.photoURL,
-        userEmail: userEmail,
-        isRead: false,
-        postId: id,
-      });
+      if (posterEmail !== user.email) {
+        db.collection("notification").add({
+          senderEmail: user.email,
+          notification: `${user.displayName} replied to your comment`,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          photoURL: user.photoURL,
+          userEmail: userEmail,
+          isRead: false,
+          postId: id,
+        });
+      }
     }
     setInput("");
     setImgUrl("");
@@ -95,20 +97,25 @@ const ReplyComp = ({ id, userEmail, replies }) => {
         <div title="Like" className="post-option">
           <ThumbUp />
         </div>
-        <div title="Reply" className="post-option" onClick={() => setShowReply((e) => !e)}>
-          <ChatBubbleOutline/>
+        <div
+          title="Reply"
+          className="post-option"
+          onClick={() => setShowReply((e) => !e)}
+        >
+          <ChatBubbleOutline />
         </div>
       </div>
       {showReply && (
         <>
           {replies &&
-            replies.map((e) => (
+            replies.map((e, index) => (
               <div
                 className="post_topInfo comment-area"
                 style={{ marginLeft: 10, marginTop: 5 }}
+                key={index}
               >
                 <div className="comment-area-top">
-                <Avatar src={e.photo} className="post_avatar" />
+                  <Avatar src={e.photo} className="post_avatar" />
                   <h3>{e.userName}</h3>
                   <IconButton
                     style={{ marginLeft: "auto" }}
@@ -118,7 +125,7 @@ const ReplyComp = ({ id, userEmail, replies }) => {
                   </IconButton>
                 </div>
                 {/* <p>{new Date(timestamp?.toDate()).toUTCString()}</p> */}
-                <div style={{marginLeft: 50}} >
+                <div style={{ marginLeft: 50 }}>
                   <p className="comment-text">{e.comment}</p>
                 </div>
                 <div className="comment-img">

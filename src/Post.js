@@ -293,9 +293,9 @@ const Post = (props) => {
         {commentPageOpen && (
           <CommentsPage
             id={props.data.id}
-            state={commentPageOpen}
             userEmail={posterEmail}
             comments={comments}
+            posterEmail={posterEmail}
           ></CommentsPage>
         )}
       </div>

@@ -1,12 +1,6 @@
-.sidebar {
-  padding: 25px 10px;
-  flex: 0.33;
-  border-left: 4px;
-  border-color: aqua;
-}
 .sidebar-content {
-  position: fixed;
   overflow-wrap: break-word;
+  border-right: 1px solid #d3d3d3;
 }
 @media (max-width: 600px) {
   .sidebar {
