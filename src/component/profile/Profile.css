@@ -4,41 +4,13 @@
   flex-direction: column;
   background-color: white;
   padding: 20px;
-  margin-top: 10px;
+  margin-top: 25px;
   border-radius: 8px;
 }
 
-.profile_info {
+.post_Item {
   display: flex;
-  justify-content: space-between;
-  border-bottom: 1px solid gray;
-  padding-bottom: 15px;
-}
-
-.profile_bio {
-  padding: 5px;
-}
-
-.profile_button {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.profile_button button {
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  border: none;
-  background-color: #dddddd;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.profile_post {
-  margin: 20px 0;
-  padding: 20px 0px;
+  justify-content: center;
 }
 
 @media (max-width: 1050px) {

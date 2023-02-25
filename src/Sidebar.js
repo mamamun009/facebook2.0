@@ -13,7 +13,8 @@ import Widgets from "./Widgets";
 import Covid from "./component/covid/Covid";
 import Profile from "./component/profile/Profile";
 import Notification from "./component/notification/Notification";
-import { Badge } from "@material-ui/core";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import { Button } from "@material-ui/core";
 
 const Sidebar = () => {
   const [{ user }] = useStateValue();
@@ -42,19 +43,27 @@ const Sidebar = () => {
             screenName="Messenger"
           />
           <SidebarRow
-            Icon={LocalHospitalIcon}
-            title="COVID-19"
-            setScreen={setScreen}
-            screenName="COVID-19"
-          />
-          <SidebarRow
             Icon={NotificationsIcon}
             title="Notification"
             setScreen={setScreen}
             screenName="Notification"
           />
-          <SidebarRow Icon={Storefront} title="Marketplace" />
-          <SidebarRow Icon={VideoLibrary} title="Videos" />
+          <SidebarRow
+            Icon={LocalHospitalIcon}
+            title="COVID-19"
+            setScreen={setScreen}
+            screenName="COVID-19"
+          />
+          {/* <SidebarRow Icon={Storefront} title="Marketplace" />
+          <SidebarRow Icon={VideoLibrary} title="Videos" /> */}
+          <Button
+            style={{ marginTop: 30, marginLeft: 10 }}
+            variant="contained"
+            color="secondary"
+            startIcon={<ExitToAppIcon />}
+          >
+            Sign out
+          </Button>
         </div>
       </div>
       {screen === "Feed" ? (

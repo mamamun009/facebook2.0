@@ -15,7 +15,7 @@ const Feed = () => {
       );
   }, []);
   return (
-    <div className="feed" style={{ minHeight: "100vh", overflowY: "scroll" }}>
+    <div className="feed" style={{ minHeight: "100vh" }}>
       {/* StoryReel */}
       {/* <StoryReel /> */}
       {/* MessageSender */}

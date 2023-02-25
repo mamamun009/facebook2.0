@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Avatar, Box, Modal } from "@material-ui/core";
+import { Avatar, Box } from "@material-ui/core";
 import db from "../../firebase";
 import PostBody from "./PostBody";
-import Fade from "@material-ui/core/Fade";
-import Backdrop from "@material-ui/core/Backdrop";
 import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
 

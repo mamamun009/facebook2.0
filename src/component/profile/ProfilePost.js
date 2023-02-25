@@ -34,21 +34,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfilePost = () => {
+const ProfilePost = ({ post }) => {
+  console.log(post?.data.posterEmail);
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
   return (
     <Card className={classes.root} style={{ marginBottom: "10px" }}>
       <CardHeader
-        avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
-        }
+        avatar={<Avatar src="" className={classes.avatar} />}
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />

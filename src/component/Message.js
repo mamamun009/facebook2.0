@@ -11,7 +11,7 @@ const Message = () => {
       <Grid
         className="messgae_container"
         container
-        style={{ marginTop: "20px" }}
+        style={{ marginTop: "25px" }}
       >
         <Grid
           item

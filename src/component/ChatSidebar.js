@@ -20,7 +20,7 @@ const ChatSidebar = ({ setChatUser }) => {
       {users.map(
         (e) =>
           e.data.email !== user.email && (
-            <Chatuser user={e.data} setChatUser={setChatUser} />
+            <Chatuser key={e.id} user={e.data} setChatUser={setChatUser} />
           )
       )}
     </div>

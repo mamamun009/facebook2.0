@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     padding: 0,
     backgroundColor: "white",
-    marginTop: 20,
+    marginTop: 25,
     marginBottom: 20,
     borderRadius: 10,
     overflow: "hidden",
@@ -26,7 +26,15 @@ const Notification = () => {
   const [{ user }] = useStateValue();
   const [notifications, setNotifications] = useState([]);
   const notify = (e) => toast(e);
-
+  // useEffect(() => {
+  //   notifications.forEach((e) => {
+  //     if (e.data.timestamp.seconds + 5 > Math.round(Date.now() / 1000)) {
+  //       notify("New notification:");
+  //       console.log(e.data.timestamp.seconds);
+  //     }
+  //     // e.data.timestamp.seconds + 3 > Math.round(Date.now() / 1000) &&
+  //   });
+  // }, [notifications, notifications.length]);
   useEffect(() => {
     db.collection("notification")
       .orderBy("timestamp", "desc")
@@ -35,17 +43,6 @@ const Notification = () => {
         setNotifications(
           snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
         );
-        // snapshot.docChanges().forEach((change) => {
-        //   if (
-        //     change.type === "added" &&
-        //     change.doc.data().timestamp.seconds + 10 >
-        //       Math.round(Date.now() / 1000)
-        //   ) {
-        //     console.log("New notification: ", change.doc.data());
-        //     // notify("New notification: ");
-        //     return;
-        //   }
-        // });
       });
   }, [user.email]);
   //
@@ -56,7 +53,7 @@ const Notification = () => {
       </div>
       <div style={{ marginTop: 15 }}>
         {notifications.map((data) => (
-          <NotificationCard data={data} />
+          <NotificationCard key={data.id} data={data} />
         ))}
       </div>
     </Container>
