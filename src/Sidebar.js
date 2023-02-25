@@ -18,12 +18,12 @@ import StoryReel from "./StoryReel";
 const Sidebar = ({ notifications, posts }) => {
   const [{ user }] = useStateValue();
   const [screen, setScreen] = useState("Feed");
-  const unReadNotifs = notifications.filter((notif) => !notif.read);
+  const unReadNotifs = notifications.filter((notif) => !notif.data.isRead);
   return (
     <>
       {/* sidebar */}
       <div
-        className="hide-scrollbar sidebar-content"
+        className="hide-scrollbar sidebar-content" 
         style={{
           flex: 0.2,
           minHeight: "100vh",

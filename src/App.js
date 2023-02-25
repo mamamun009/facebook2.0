@@ -12,7 +12,7 @@ function App() {
   const [notifications, setNotifications] = useState([]);
   const notify = (e) => toast(e);
   useEffect(() => {
-    notifications.forEach((e) => {
+    notifications.forEach((e) => { 
       if (e.data?.timestamp?.seconds + 3 > Math.round(Date.now() / 1000)) {
         notify(e.data.notification);
       }
