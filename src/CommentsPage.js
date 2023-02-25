@@ -1,5 +1,5 @@
 import { Avatar, IconButton } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import db from "./firebase";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
@@ -7,7 +7,6 @@ import Fade from "@material-ui/core/Fade";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useStateValue } from "./StateProvider";
 import "./CommentsPage.css";
-import { ChatBubbleOutline, ThumbUp } from "@material-ui/icons";
 import { InsertEmoticon } from "@material-ui/icons";
 import { LinearProgress } from "@material-ui/core";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
@@ -15,7 +14,8 @@ import Picker from "emoji-picker-react";
 import Popover from "@material-ui/core/Popover";
 import axios from "axios";
 import firebase from "firebase";
-const CommentsPage = ({ state, id, userEmail }) => {
+import ReplyComp from "./ReplyComp";
+const CommentsPage = ({ state, id, userEmail, comments }) => {
   const handleCommentMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -25,39 +25,20 @@ const CommentsPage = ({ state, id, userEmail }) => {
     setAnchorEl(null);
   };
   const [{ user }] = useStateValue();
-  const [comments, setComments] = useState([]);
-  useEffect(() => {
-    db.collection("posts")
-      .doc(id)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          setComments(doc.data().comments);
-        } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-        }
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error);
-      });
-  });
   const [input, setInput] = useState("");
   const [imgUrl, setImgUrl] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     if (input !== "" || imgUrl !== "") {
-      db.collection("posts")
-        .doc(id)
-        .update({
-          comments: firebase.firestore.FieldValue.arrayUnion({
-            comment: input,
-            userName: user.displayName,
-            photo: user.photoURL,
-            posterEmail: user.email,
-            commentPhoto: imgUrl,
-          }),
-        });
+      db.collection("comments").add({
+        comment: input,
+        userName: user.displayName,
+        photo: user.photoURL,
+        posterEmail: user.email,
+        commentPhoto: imgUrl,
+        replies: [],
+        postId: id,
+      });
       db.collection("notification").add({
         senderEmail: user.email,
         notification: `${user.displayName} commented on your post`,
@@ -90,6 +71,7 @@ const CommentsPage = ({ state, id, userEmail }) => {
   const [openEmoji, setOpenEmoji] = useState(false);
 
   const onEmojiClick = (emojiObject) => {
+    console.log(emojiObject.emoji);
     const newInput = input.concat(emojiObject.emoji);
     setInput(newInput);
   };
@@ -106,34 +88,27 @@ const CommentsPage = ({ state, id, userEmail }) => {
       {slicedComments.map((data) => (
         <>
           <div className="post_top">
-            <Avatar src={data.photo} className="post_avatar" />
-            <div className="post_topInfo comment-area">
-              <div className="comment-area-top">
-                <h3>{data.userName}</h3>
-                <IconButton
-                  style={{ marginLeft: "auto" }}
-                  onClick={handleCommentMenu}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-              </div>
-              {/* <p>{new Date(timestamp?.toDate()).toUTCString()}</p> */}
-              <div>
-                <p className="comment-text">{data.comment}</p>
-              </div>
-              <div className="comment-img">
-                <img src={data.commentPhoto} alt="" />
-              </div>
-              <div
-                style={{ fontSize: "small", padding: "0px " }}
-                className="post-options"
-              >
-                <div title="Like" className="post-option">
-                  <ThumbUp />
+            <div>
+              {" "}
+              <div className="post_topInfo comment-area">
+                <div className="comment-area-top">
+                <Avatar src={data.data.photo} className="post_avatar" />
+                  <h3>{data.data.userName}</h3>
+                  <IconButton
+                    style={{ marginLeft: "auto" }}
+                    onClick={handleCommentMenu}
+                  >
+                    <MoreVertIcon />
+                  </IconButton>
                 </div>
-                <div title="Reply" className="post-option">
-                  <ChatBubbleOutline />
+                {/* <p>{new Date(timestamp?.toDate()).toUTCString()}</p> */}
+                <div>
+                  <p className="comment-text">{data.data.comment}</p>
                 </div>
+                <div className="comment-img">
+                  <img src={data.data.commentPhoto} alt="" />
+                </div>
+                <ReplyComp id={data.id} userEmail={userEmail} replies={data.data.replies} />
               </div>
             </div>
             <div>
@@ -196,12 +171,12 @@ const CommentsPage = ({ state, id, userEmail }) => {
               id="upload_comment"
               style={{ display: "none" }}
             />
-            <div
+            {/* <div
               className="comment-option"
               onClick={() => setOpenEmoji(!openEmoji)}
             >
               <InsertEmoticon />
-            </div>
+            </div> */}
           </div>
 
           <button onClick={(e) => handleSubmit(e)} type="submit">
@@ -222,7 +197,7 @@ const CommentsPage = ({ state, id, userEmail }) => {
         >
           {" "}
           <div>
-            <Picker onEmojiClick={onEmojiClick} />
+            <Picker onEmojiClick={(emojiObejct) => setInput(prev => prev + emojiObejct.emoji)} />
           </div>
         </Popover>
       </div>

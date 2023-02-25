@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Post.css";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Fade from "@material-ui/core/Fade";
 import { Avatar, IconButton } from "@material-ui/core";
-import { ChatBubbleOutline, NearMeOutlined, ThumbUp } from "@material-ui/icons";
+import {
+  ChatBubbleOutline,
+  NearMeOutlined,
+  ThumbDown,
+  ThumbUp,
+} from "@material-ui/icons";
 import db from "./firebase";
 import swal from "sweetalert";
 import { useState } from "react";
@@ -23,7 +28,6 @@ const Post = (props) => {
     photoURL,
     displayName,
     likersEmail,
-    comments,
     posterEmail,
   } = props.data.data;
   const handlePostMenu = (event) => {
@@ -63,6 +67,7 @@ const Post = (props) => {
     });
   };
   const [like, setLike] = useState(false);
+  const [dislike, setDislike] = useState(false);
   const giveLike = (id) => {
     db.collection("posts")
       .doc(id)
@@ -78,6 +83,39 @@ const Post = (props) => {
       isRead: false,
       postId: id,
     });
+    setDislike(false);
+  };
+  const giveDisLike = (id) => {
+    db.collection("posts")
+      .doc(id)
+      .update({
+        disLikersEmail: firebase.firestore.FieldValue.arrayUnion(user.email),
+      });
+    db.collection("notification").add({
+      senderEmail: user.email,
+      notification: `${user.displayName} reacted to your post`,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      photoURL: user.photoURL,
+      userEmail: posterEmail,
+      isRead: false,
+      postId: id,
+    });
+    // if (dislike) {
+    setLike(false);
+    // }
+  };
+  const handleDisLike = (id) => {
+    dislike
+      ? db
+          .collection("posts")
+          .doc(id)
+          .update({
+            disLikersEmail: firebase.firestore.FieldValue.arrayRemove(
+              user.email
+            ),
+          })
+      : giveDisLike(id);
+    setDislike(!dislike);
   };
   const handleLike = (id) => {
     like
@@ -124,6 +162,27 @@ const Post = (props) => {
   const handleAllComments = () => {
     setCommentPageOpen(!commentPageOpen);
   };
+  const [comments, setComments] = useState([]);
+  const [commentsLength, setCommentsLength] = useState(0);
+  useEffect(() => {
+    if (comments.length) {
+      setCommentsLength(0);
+      comments.map((e) =>
+        setCommentsLength((prev) => prev + e.data.replies.length)
+      );
+      setCommentsLength((prev) => prev + comments.length);
+      // res.map((e) => console.log(e));
+    }
+  }, [comments]);
+  useEffect(() => {
+    db.collection("comments")
+      .where("postId", "==", props.data.id)
+      .onSnapshot((snapshot) => {
+        setComments(
+          snapshot.docs.map((doc) => ({ id: doc.id, data: doc.data() }))
+        );
+      });
+  }, [props.data.id]);
   return (
     <>
       <div className="post">
@@ -172,23 +231,12 @@ const Post = (props) => {
         </div>
         <div className="comments">
           <div
-            style={{ display: `${likersEmail.length > 0 ? "block" : "none"}` }}
-            className="like both"
-          >
-            <p>
-              {likersEmail.length} Like
-              <span style={{ display: `${likersEmail.length < 2 && "none"}` }}>
-                s
-              </span>
-            </p>
-          </div>
-          <div
             onClick={() => handleAllComments()}
             style={{ display: `${comments.length > 0 ? "block" : "none"}` }}
             className="comment both"
           >
             <p>
-              {comments.length} Comment
+              {commentsLength} Comment
               <span style={{ display: `${comments.length < 2 && "none"}` }}>
                 s
               </span>
@@ -205,8 +253,33 @@ const Post = (props) => {
               }`,
             }}
           >
+            {likersEmail.length > 0 && (
+              <p style={{ fontSize: 18, margiRight: 10 }}>
+                {likersEmail.length}
+              </p>
+            )}
             <ThumbUp />
             <p>Like</p>
+          </div>
+          <div
+            className="post-option"
+            onClick={() => handleDisLike(props.data.id)}
+            style={{
+              color: `${
+                props.data?.data?.disLikersEmail &&
+                props.data?.data?.disLikersEmail?.find((e) => e === user.email)
+                  ? "#2e81f4"
+                  : ""
+              }`,
+            }}
+          >
+            {props.data?.data?.disLikersEmail?.length > 0 && (
+              <p style={{ fontSize: 18, margiRight: 10 }}>
+                {props.data.data.disLikersEmail.length}
+              </p>
+            )}
+            <ThumbDown />
+            <p>Dislike</p>
           </div>
           <div onClick={() => handleAllComments()} className="post-option">
             <ChatBubbleOutline />
@@ -222,6 +295,7 @@ const Post = (props) => {
             id={props.data.id}
             state={commentPageOpen}
             userEmail={posterEmail}
+            comments={comments}
           ></CommentsPage>
         )}
       </div>
