@@ -12,13 +12,13 @@ import Covid from "./component/covid/Covid";
 import Profile from "./component/profile/Profile";
 import Notification from "./component/notification/Notification";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { Button } from "@material-ui/core";
+import { Badge, Button } from "@material-ui/core";
 import StoryReel from "./StoryReel";
 
 const Sidebar = ({ notifications, posts }) => {
   const [{ user }] = useStateValue();
   const [screen, setScreen] = useState("Feed");
-
+  const unReadNotifs = notifications.filter((notif) => !notif.read);
   return (
     <>
       {/* sidebar */}
@@ -51,12 +51,20 @@ const Sidebar = ({ notifications, posts }) => {
             setScreen={setScreen}
             screenName="Messenger"
           />
-          <SidebarRow
-            Icon={NotificationsIcon}
-            title="Notification"
-            setScreen={setScreen}
-            screenName="Notification"
-          />
+          <div className="sidebarRow" onClick={() => setScreen("Notification")}>
+            {unReadNotifs.length > 0 ? (
+              <Badge badgeContent={unReadNotifs.length} color="secondary">
+                <NotificationsIcon
+                  style={{ fontSize: "xx-large", color: "#f50057" }}
+                />
+              </Badge>
+            ) : (
+              <NotificationsIcon
+                style={{ fontSize: "xx-large", color: "#f50057" }}
+              />
+            )}
+            <h4>Notification</h4>
+          </div>
           <SidebarRow
             Icon={LocalHospitalIcon}
             title="COVID-19"
