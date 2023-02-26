@@ -35,7 +35,12 @@ const Login = () => {
         <img src={logos} alt="logo" />
         <h1 style={{ textAlign: "center", fontSize: "36px" }}>Mocospace</h1>
       </div>
-      <Button type="submit" onClick={signIn}>
+      <Button
+        type="submit"
+        variant="contained"
+        color="secondary"
+        onClick={signIn}
+      >
         LogIn
       </Button>
     </div>

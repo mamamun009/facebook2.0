@@ -4,30 +4,11 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import profile from "../../images/profile.jpg";
 import hat from "../../images/hat.png";
 import "./ProfileUpdate.css";
-import { makeStyles } from "@material-ui/core/styles";
 import ProfileModal from "./ProfileModal";
 import { useStateValue } from "../../StateProvider";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minWidth: 275,
-    borderRadius: 0,
-    marginTop: 10,
-  },
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: "60vw",
-    marginLeft: "20vw",
-    border: "1px solid #000",
-    maxHeight: "80vh",
-    marginTop: "10vh",
-  },
-}));
+import { Button } from "@material-ui/core";
 
 const ProfileUpdate = () => {
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [{ user }] = useStateValue();
 
@@ -37,7 +18,7 @@ const ProfileUpdate = () => {
   
 
   return (
-    <div>
+    <div className="profile_Update">
       <div className="profile_info">
         <div>
           <div
@@ -85,10 +66,18 @@ const ProfileUpdate = () => {
               justifyContent: "flex-end",
             }}
           >
-            <button onClick={() => handleOpen(true)}>
+            {/* <button>
               <CreateIcon style={{ marginRight: "3px", fontSize: "medium" }} />
               Edit Profile
-            </button>
+            </button> */}
+            <Button
+              onClick={() => handleOpen(true)}
+              variant="contained"
+              color="secondary"
+              startIcon={<CreateIcon />}
+            >
+              Edit Profile
+            </Button>
             <ProfileModal open={open} setOpen={setOpen} />
           </div>
 

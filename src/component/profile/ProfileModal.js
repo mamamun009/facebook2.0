@@ -73,10 +73,10 @@ const ProfileModal = ({ open, setOpen }) => {
             <Button
               style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}
               variant="contained"
-              color="primary"
+              color="secondary"
               type="submit"
             >
-              Save
+              Update Profile
             </Button>
           </form>
         </Box>

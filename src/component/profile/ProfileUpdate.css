@@ -1,8 +1,12 @@
+.profile_Update {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
 .profile_info {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid gray;
-  padding-bottom: 15px;
 }
 
 .profile_bio {
@@ -13,17 +17,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-
-.profile_button button {
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  border: none;
-  background-color: #dddddd;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
 }
 
 .profile_post {

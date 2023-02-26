@@ -2,7 +2,7 @@ import { Avatar, IconButton } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import db from "./firebase";
 import { useStateValue } from "./StateProvider";
-import "./CommentsPage.css";
+import "./ReplyComp.css";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import Picker from "emoji-picker-react";
 import Popover from "@material-ui/core/Popover";
@@ -134,13 +134,7 @@ const ReplyComp = ({ id, userEmail, replies, posterEmail }) => {
               </div>
             ))}
           <div className="post_topInfo comment-area">
-            <div
-              style={{
-                borderTop: "1px solid rgb(175, 175, 175)",
-                borderRadius: "10px",
-              }}
-              className="messageSender_top"
-            >
+            <div className="messageSender_top" style={{ marginLeft: 50 }}>
               <Avatar src={user.photoURL} />
               <form>
                 <input
