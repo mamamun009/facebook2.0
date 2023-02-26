@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./Profile.css";
-import ProfilePost from "./ProfilePost";
 import Grid from "@material-ui/core/Grid";
 import { Container } from "@material-ui/core";
 import ProfileUpdate from "./ProfileUpdate";
@@ -24,7 +23,11 @@ const Profile = () => {
   return (
     <div className="profile">
       <ProfileUpdate />
-      <Container maxWidth="sm" className="profile_post">
+      <Container
+        maxWidth="sm"
+        className="profile_post"
+        style={{ marginTop: 0 }}
+      >
         <Grid container spacing={3}>
           {posts.map(
             (post) =>

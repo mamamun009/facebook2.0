@@ -249,16 +249,14 @@ const Post = (props) => {
             onClick={() => handleLike(props.data.id)}
             style={{
               color: `${
-                likersEmail.find((e) => e === user.email) ? "#2e81f4" : ""
+                likersEmail.find((e) => e === user.email) ? "#f50057" : ""
               }`,
             }}
           >
             {likersEmail.length > 0 && (
-              <p style={{ fontSize: 18, margiRight: 10 }}>
-                {likersEmail.length}
-              </p>
+              <p style={{ fontSize: 18 }}>{likersEmail.length}</p>
             )}
-            <ThumbUp />
+            <ThumbUp style={{ marginLeft: 5 }} />
             <p>Like</p>
           </div>
           <div
@@ -268,7 +266,7 @@ const Post = (props) => {
               color: `${
                 props.data?.data?.disLikersEmail &&
                 props.data?.data?.disLikersEmail?.find((e) => e === user.email)
-                  ? "#2e81f4"
+                  ? "#f50057"
                   : ""
               }`,
             }}
@@ -278,7 +276,7 @@ const Post = (props) => {
                 {props.data.data.disLikersEmail.length}
               </p>
             )}
-            <ThumbDown />
+            <ThumbDown style={{ marginLeft: 5 }} />
             <p>Dislike</p>
           </div>
           <div onClick={() => handleAllComments()} className="post-option">

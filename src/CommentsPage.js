@@ -1,5 +1,5 @@
-import { Avatar, IconButton } from "@material-ui/core";
-import React, {  useState } from "react";
+import { Avatar, Button, IconButton } from "@material-ui/core";
+import React, { useState } from "react";
 import db from "./firebase";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
@@ -7,7 +7,6 @@ import Fade from "@material-ui/core/Fade";
 import MenuItem from "@material-ui/core/MenuItem";
 import { useStateValue } from "./StateProvider";
 import "./CommentsPage.css";
-import { InsertEmoticon } from "@material-ui/icons";
 import { LinearProgress } from "@material-ui/core";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import Picker from "emoji-picker-react";
@@ -89,26 +88,36 @@ const CommentsPage = ({ state, id, userEmail, comments }) => {
         <>
           <div className="post_top">
             <div>
-              {" "}
               <div className="post_topInfo comment-area">
                 <div className="comment-area-top">
-                <Avatar src={data.data.photo} className="post_avatar" />
-                  <h3>{data.data.userName}</h3>
-                  <IconButton
-                    style={{ marginLeft: "auto" }}
-                    onClick={handleCommentMenu}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
+                  <Avatar src={data.data.photo} className="post_avatar" />
+                  <div className="comment_box">
+                    <div style={{ display: "flex" }}>
+                      <div>
+                        <h3>{data.data.userName}</h3>
+                        <p className="comment-text">{data.data.comment}</p>
+                      </div>
+                      <div>
+                        <IconButton
+                          style={{ marginLeft: "auto", paddingTop: 2 }}
+                          onClick={handleCommentMenu}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                      </div>
+                    </div>
+                    <div className="comment-img">
+                      <img src={data.data.commentPhoto} alt="" />
+                    </div>
+                  </div>
                 </div>
                 {/* <p>{new Date(timestamp?.toDate()).toUTCString()}</p> */}
-                <div>
-                  <p className="comment-text">{data.data.comment}</p>
-                </div>
-                <div className="comment-img">
-                  <img src={data.data.commentPhoto} alt="" />
-                </div>
-                <ReplyComp id={data.id} userEmail={userEmail} replies={data.data.replies} />
+
+                <ReplyComp
+                  id={data.id}
+                  userEmail={userEmail}
+                  replies={data.data.replies}
+                />
               </div>
             </div>
             <div>
@@ -136,21 +145,27 @@ const CommentsPage = ({ state, id, userEmail, comments }) => {
           style={{ display: `${comments.length <= to ? "none" : "block"}` }}
           className="seeMoreBtn"
         >
-          <button onClick={() => setTo(to + 3)}>see more</button>
+          <Button
+            onClick={() => setTo(to + 3)}
+            variant="contained"
+            color="secondary"
+          >
+            see more
+          </Button>
         </div>
       )}
       {comments.length <= to && (
         <div className="seeMoreBtn">
-          <button onClick={() => setTo(3)}>see less</button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => setTo(3)}
+          >
+            see less
+          </Button>
         </div>
       )}
-      <div
-        style={{
-          borderTop: "1px solid rgb(175, 175, 175)",
-          borderRadius: "10px",
-        }}
-        className="messageSender_top"
-      >
+      <div className="messageSender_top">
         <Avatar src={user.photoURL} />
         <form>
           <input
@@ -171,12 +186,6 @@ const CommentsPage = ({ state, id, userEmail, comments }) => {
               id="upload_comment"
               style={{ display: "none" }}
             />
-            {/* <div
-              className="comment-option"
-              onClick={() => setOpenEmoji(!openEmoji)}
-            >
-              <InsertEmoticon />
-            </div> */}
           </div>
 
           <button onClick={(e) => handleSubmit(e)} type="submit">
@@ -195,9 +204,12 @@ const CommentsPage = ({ state, id, userEmail, comments }) => {
             horizontal: "center",
           }}
         >
-          {" "}
           <div>
-            <Picker onEmojiClick={(emojiObejct) => setInput(prev => prev + emojiObejct.emoji)} />
+            <Picker
+              onEmojiClick={(emojiObejct) =>
+                setInput((prev) => prev + emojiObejct.emoji)
+              }
+            />
           </div>
         </Popover>
       </div>

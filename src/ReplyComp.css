@@ -1,0 +1,10 @@
+.reply-box_area {
+  display: flex;
+  margin: 5px 25px 0;
+}
+
+.reply_box {
+  background-color: #d7d8da;
+  padding: 5px 15px;
+  border-radius: 15px;
+}

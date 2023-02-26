@@ -7,6 +7,7 @@ import db from "../../firebase";
 import PostBody from "./PostBody";
 import Dialog from "@material-ui/core/Dialog";
 import Slide from "@material-ui/core/Slide";
+import "./NotificationCard.css";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -14,7 +15,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 275,
+    minWidth: 400,
     borderRadius: 0,
     marginTop: 10,
   },
@@ -66,11 +67,16 @@ const NotificationCard = ({ data }) => {
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
           onBackdropClick={() => setOpen(false)}
+          className="noti_box"
         >
           {/* <Fade in={open}> */}
           <Box
-            className="hide-scrollbar"
-            style={{ overflowY: "scroll", height: "100%", width: "100%" }}
+            className="hide-scrollbar noti_box"
+            style={{
+              overflowY: "scroll",
+              height: "100%",
+              width: "100%",
+            }}
           >
             <PostBody id={data.data.postId} />
           </Box>
