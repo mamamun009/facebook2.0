@@ -93,20 +93,25 @@ const CommentsPage = ({ id, userEmail, comments, posterEmail }) => {
               <div className="post_topInfo comment-area">
                 <div className="comment-area-top">
                   <Avatar src={data.data.photo} className="post_avatar" />
-                  <h3>{data.data.userName}</h3>
-                  <IconButton
-                    style={{ marginLeft: "auto" }}
-                    onClick={handleCommentMenu}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                </div>
-                {/* <p>{new Date(timestamp?.toDate()).toUTCString()}</p> */}
-                <div>
-                  <p className="comment-text">{data.data.comment}</p>
-                </div>
-                <div className="comment-img">
-                  <img src={data.data.commentPhoto} alt="" />
+                  <div className="comment_box">
+                    <div style={{ display: "flex" }}>
+                      <div>
+                        <h3>{data.data.userName}</h3>
+                        <p className="comment-text">{data.data.comment}</p>
+                      </div>
+                      <div>
+                        <IconButton
+                          style={{ marginLeft: "auto", paddingTop: 2 }}
+                          onClick={handleCommentMenu}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                      </div>
+                    </div>
+                    <div className="comment-img">
+                      <img src={data.data.commentPhoto} alt="" />
+                    </div>
+                  </div>
                 </div>
                 <ReplyComp
                   id={data.id}
