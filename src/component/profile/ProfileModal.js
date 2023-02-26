@@ -3,17 +3,39 @@ import { Box, Dialog, TextField } from "@material-ui/core";
 import Slide from "@material-ui/core/Slide";
 import "./ProfileModal.css";
 import Button from "@material-ui/core/Button";
+import db from "../../firebase";
+import { useStateValue } from "../../StateProvider";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 const ProfileModal = ({ open, setOpen }) => {
-  const [update, setUpdate] = useState(null);
+  const [{ user }] = useStateValue();
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const [location, setLocation] = useState("");
+  const [university, setUniversity] = useState("");
+  const [degree, setDegree] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log();
+    console.log(name, bio, location, university, degree);
+    db.collection("profile").add({
+      profileEmail: user.email,
+      name: name,
+      boi: bio,
+      locaton: location,
+      university: university,
+      degree: degree,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+    });
+    setName("");
+    setBio("");
+    setLocation("");
+    setUniversity("");
+    setDegree("");
   };
 
   return (
@@ -41,34 +63,43 @@ const ProfileModal = ({ open, setOpen }) => {
           >
             <TextField
               style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}
-              id="outlined-basic"
+              id="outlined-basic1"
+              value={name}
               label="Name"
               variant="outlined"
-              onChange={(e) => setUpdate(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
             <TextField
               style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}
-              id="outlined-basic"
+              id="outlined-basic2"
+              value={bio}
               label="Bio"
               variant="outlined"
+              onChange={(e) => setBio(e.target.value)}
             />
             <TextField
               style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}
-              id="outlined-basic"
+              id="outlined-basic3"
+              value={location}
               label="Location"
               variant="outlined"
+              onChange={(e) => setLocation(e.target.value)}
             />
             <TextField
               style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}
-              id="outlined-basic"
+              id="outlined-basic4"
+              value={university}
               label="University"
               variant="outlined"
+              onChange={(e) => setUniversity(e.target.value)}
             />
             <TextField
               style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}
-              id="outlined-basic"
+              id="outlined-basic5"
+              value={degree}
               label="Degree"
               variant="outlined"
+              onChange={(e) => setDegree(e.target.value)}
             />
             <Button
               style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}
