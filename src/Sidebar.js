@@ -47,20 +47,26 @@ const Sidebar = ({ notifications, posts }) => {
             title={user.displayName}
             setScreen={setScreen}
             screenName="Profile"
+            screen={screen}
           ></SidebarRow>
           <SidebarRow
             Icon={HomeIcon}
             title="Feed"
             setScreen={setScreen}
             screenName="Feed"
+            screen={screen}
           />
           <SidebarRow
             Icon={MessageIcon}
             title="Messenger"
             setScreen={setScreen}
             screenName="Messenger"
+            screen={screen}
           />
-          <div className="sidebarRow" onClick={() => setScreen("Notification")}>
+          <div
+            className={`sidebarRow ${screen === "Notification" && "activebtn"}`}
+            onClick={() => setScreen("Notification")}
+          >
             {unReadNotifs.length > 0 ? (
               <Badge badgeContent={unReadNotifs.length} color="secondary">
                 <NotificationsIcon
@@ -77,6 +83,7 @@ const Sidebar = ({ notifications, posts }) => {
           <SidebarRow
             Icon={LocalHospitalIcon}
             title="COVID-19"
+            screen={screen}
             setScreen={setScreen}
             screenName="COVID-19"
           />
