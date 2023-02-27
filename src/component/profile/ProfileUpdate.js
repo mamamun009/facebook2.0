@@ -15,7 +15,6 @@ const ProfileUpdate = () => {
   const handleOpen = () => {
     setOpen(true);
   };
-  
 
   return (
     <div className="profile_Update">

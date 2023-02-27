@@ -20,17 +20,16 @@ const ProfileModal = ({ open, setOpen }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(name, bio, location, university, degree);
-    db.collection("profile").add({
-      profileEmail: user.email,
-      name: name,
-      boi: bio,
-      locaton: location,
-      university: university,
-      degree: degree,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-    });
+    db.collection("users").doc(user.email).set(
+      {
+        name: name,
+        bio: bio,
+        location: location,
+        university: university,
+        degree: degree,
+      },
+      { merge: true }
+    );
     setName("");
     setBio("");
     setLocation("");
