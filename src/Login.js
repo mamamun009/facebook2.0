@@ -24,6 +24,7 @@ const Login = () => {
           type: actionTypes.SET_USER,
           user: res.user,
         });
+        localStorage.setItem("user", JSON.stringify(res.user));
       })
       .catch((err) => {
         console.log(err);

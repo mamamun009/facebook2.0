@@ -14,16 +14,25 @@ import Notification from "./component/notification/Notification";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Badge, Button } from "@material-ui/core";
 import StoryReel from "./StoryReel";
+import { actionTypes } from "./Reducer";
 
 const Sidebar = ({ notifications, posts }) => {
   const [{ user }] = useStateValue();
+  const [state, dispatch] = useStateValue();
   const [screen, setScreen] = useState("Feed");
   const unReadNotifs = notifications.filter((notif) => !notif.data.isRead);
+  const logout = () => {
+    dispatch({
+      type: actionTypes.SET_USER,
+      user: null,
+    });
+    localStorage.removeItem("user");
+  };
   return (
     <>
       {/* sidebar */}
       <div
-        className="hide-scrollbar sidebar-content" 
+        className="hide-scrollbar sidebar-content"
         style={{
           flex: 0.2,
           minHeight: "100vh",
@@ -75,6 +84,7 @@ const Sidebar = ({ notifications, posts }) => {
           <SidebarRow Icon={VideoLibrary} title="Videos" /> */}
         </div>
         <Button
+          onClick={() => logout()}
           style={{
             position: "absolute",
             bottom: 2,
