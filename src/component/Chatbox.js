@@ -17,7 +17,7 @@ const Chatbox = ({ chatUser }) => {
       );
   }, []);
   return (
-    <div style={{ height: "100%" }}>
+    <div style={{ height: "100%", minHeight: "100%" }}>
       <div className="chatbox_header">
         <Avatar src={chatUser.photoURL} />
         <h4 style={{ paddingLeft: 4 }}>{chatUser.displayName}</h4>
@@ -27,6 +27,7 @@ const Chatbox = ({ chatUser }) => {
         style={{
           overflowY: "scroll",
           height: "80%",
+          maxHeight: "80%",
           padding: 10,
           paddingBottom: 50,
         }}
