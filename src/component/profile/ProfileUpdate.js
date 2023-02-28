@@ -21,18 +21,7 @@ const ProfileUpdate = () => {
     db.collection("users")
       .doc(user.email)
       .onSnapshot((doc) => setUpdate(doc.data()));
-    db.collection("users")
-      .doc(user.email)
-      .get()
-      .then((doc) => {
-        setUpdate(doc.data());
-        // doc.data() will be undefined in this case
-        console.log("No such document!", doc.data());
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error);
-      });
-  }, []);
+  }, [user.email]);
 
   return (
     <div className="profile_Update">
