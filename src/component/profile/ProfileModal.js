@@ -12,15 +12,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const ProfileModal = ({ open, setOpen }) => {
   const [{ user }] = useStateValue();
-  const [name, setName] = useState(user.name);
-  const [bio, setBio] = useState(user.bio);
-  const [location, setLocation] = useState(user.location);
-  const [university, setUniversity] = useState(user.university);
-  const [degree, setDegree] = useState(user.degree);
+  const [name, setName] = useState(user.name || null);
+  const [bio, setBio] = useState(user.bio || null);
+  const [location, setLocation] = useState(user.location || null);
+  const [university, setUniversity] = useState(user.university || null);
+  const [degree, setDegree] = useState(user.degree || null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    db.collection("users").doc(user.email).set(
+    await db.collection("users").doc(user.email).set(
       {
         name: name,
         bio: bio,
@@ -35,6 +35,7 @@ const ProfileModal = ({ open, setOpen }) => {
     setLocation("");
     setUniversity("");
     setDegree("");
+    setOpen(false);
   };
 
   return (
