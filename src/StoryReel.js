@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useStateValue } from "./StateProvider";
 import firebase from "firebase";
 import db from "./firebase";
-import { Container, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 const StoryReel = () => {
   const [stories, setStories] = useState([]);
@@ -44,25 +44,25 @@ const StoryReel = () => {
   };
   return (
     <Grid container>
-        <Grid item md={12} lg={6}>
-          <label htmlFor="upload">
-            <div className="add-story">
-              <AddIcon />
-              <input
-                type="file"
-                onChange={handleImgUpload}
-                id="upload"
-                style={{ display: "none" }}
-              />
-              <h4>Add To Your Story</h4>
-            </div>
-          </label>
+      <Grid item md={12} lg={6}>
+        <label htmlFor="upload">
+          <div className="add-story">
+            <AddIcon />
+            <input
+              type="file"
+              onChange={handleImgUpload}
+              id="upload"
+              style={{ display: "none" }}
+            />
+            <h4>Add To Your Story</h4>
+          </div>
+        </label>
+      </Grid>
+      {stories.map((story, index) => (
+        <Grid item md={12} lg={6} key={index}>
+          <Story data={story}></Story>
         </Grid>
-        {stories.map((story, index) => (
-          <Grid item md={12} lg={6} key={index}>
-            <Story data={story}></Story>
-          </Grid>
-        ))}
+      ))}
     </Grid>
   );
 };

@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import ProfileUpdate from "./ProfileUpdate";
 import Post from "../../Post";
 import { useStateValue } from "../../StateProvider";
+import MessageSender from "../../MessageSender";
 
 const Profile = ({ posts }) => {
   const [{ user }] = useStateValue();
@@ -23,6 +24,7 @@ const Profile = ({ posts }) => {
       </div>
       <div style={{ padding: 20 }}>
         <ProfileUpdate />
+        <MessageSender />
         <Grid container spacing={1}>
           {posts.map(
             (post) =>

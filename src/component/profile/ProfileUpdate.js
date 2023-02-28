@@ -1,20 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CreateIcon from "@material-ui/icons/Create";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import profile from "../../images/profile.jpg";
 import hat from "../../images/hat.png";
 import "./ProfileUpdate.css";
 import ProfileModal from "./ProfileModal";
 import { useStateValue } from "../../StateProvider";
 import { Button } from "@material-ui/core";
+import db from "../../firebase";
 
 const ProfileUpdate = () => {
   const [open, setOpen] = React.useState(false);
+  const [update, setUpdate] = useState([]);
   const [{ user }] = useStateValue();
 
   const handleOpen = () => {
     setOpen(true);
   };
+
+  useEffect(() => {
+    db.collection("users")
+      .doc(user.email)
+      .get()
+      .then((doc) => {
+        setUpdate(doc.data());
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+      });
+  }, []);
 
   return (
     <div className="profile_Update">
@@ -35,7 +50,8 @@ const ProfileUpdate = () => {
             />
           </div>
           <div className="profile_bio">
-            {/* <h2 style={{ fontSize: "26px" }}>Jugol Karmakar</h2> */}
+            <h2 style={{ fontSize: "26px" }}>{update.displayName}</h2>
+            <small>{update.name}</small>
             <p
               style={{
                 paddingTop: "3px",
@@ -44,7 +60,7 @@ const ProfileUpdate = () => {
                 fontWeight: "bold",
               }}
             >
-              Student
+              {update.bio}
             </p>
             <p
               style={{
@@ -54,7 +70,7 @@ const ProfileUpdate = () => {
               }}
             >
               <LocationOnIcon />
-              Barishal,Bangladesh
+              {update.location}
             </p>
           </div>
         </div>
@@ -90,9 +106,9 @@ const ProfileUpdate = () => {
             <img src={hat} alt="" style={{ marginTop: "8px" }} />
             <div className="profile_bio">
               <p>
-                Studies <span>B.Sc. in Computer Science & Engineering</span> at
+                Studies <span>{update.degree}</span> at
               </p>
-              <h4>University of Global village,Barishal</h4>
+              <h4>{update.university}</h4>
             </div>
           </div>
         </div>

@@ -12,11 +12,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const ProfileModal = ({ open, setOpen }) => {
   const [{ user }] = useStateValue();
-  const [name, setName] = useState("");
-  const [bio, setBio] = useState("");
-  const [location, setLocation] = useState("");
-  const [university, setUniversity] = useState("");
-  const [degree, setDegree] = useState("");
+  const [name, setName] = useState(user.name);
+  const [bio, setBio] = useState(user.bio);
+  const [location, setLocation] = useState(user.location);
+  const [university, setUniversity] = useState(user.university);
+  const [degree, setDegree] = useState(user.degree);
 
   const handleSubmit = (e) => {
     e.preventDefault();
