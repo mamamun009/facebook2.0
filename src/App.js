@@ -27,6 +27,7 @@ function App() {
       findUser();
     }
   }, []);
+  // newnwenwen
   useEffect(() => {
     notifications.forEach((e) => {
       if (e.data?.timestamp?.seconds + 3 > Math.round(Date.now() / 1000)) {
